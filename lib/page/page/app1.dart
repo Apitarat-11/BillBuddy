@@ -31,6 +31,11 @@ class _App1dState extends State<App1> {
 
   final List<String> years = ['2022', '2023', '2024'];
 
+  // ข้อมูลค่าใช้จ่ายที่กำหนดและที่ใช้ไป
+  double totalExpense = 5000;
+  double remainingExpense = 2500;
+  double spentPercent = 0.5; // 50%
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,7 +85,7 @@ class _App1dState extends State<App1> {
                             style: TextStyle(fontSize: 16, color: Colors.black),
                           ),
                           Text(
-                            '฿ -',
+                            '฿ ${remainingExpense.toStringAsFixed(2)}',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -96,8 +101,7 @@ class _App1dState extends State<App1> {
                   child: Container(
                     padding: EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Colors.white
-                          .withOpacity(0.8), // ใส่พื้นหลังขาวแบบโปร่งใส
+                      color: Colors.white.withOpacity(0.8),
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(16),
                         topRight: Radius.circular(16),
@@ -108,7 +112,7 @@ class _App1dState extends State<App1> {
                               Color.fromARGB(255, 11, 11, 11).withOpacity(0.2),
                           spreadRadius: 3,
                           blurRadius: 5,
-                          offset: Offset(0, -3), // changes position of shadow
+                          offset: Offset(0, -3),
                         ),
                       ],
                     ),
@@ -157,8 +161,9 @@ class _App1dState extends State<App1> {
                             CircularPercentIndicator(
                               radius: 60.0,
                               lineWidth: 20.0,
-                              percent: 0.0,
-                              center: Text("0%"),
+                              percent: spentPercent,
+                              center: Text(
+                                  "${(spentPercent * 100).toStringAsFixed(0)}%"),
                               progressColor: const Color.fromARGB(255, 0, 0, 0),
                               backgroundColor: Colors.grey.shade200,
                             ),
@@ -169,7 +174,7 @@ class _App1dState extends State<App1> {
                                 Text('กำหนดค่าใช้จ่ายของเดือนนี้',
                                     style: TextStyle(
                                         fontSize: 18, color: Colors.black87)),
-                                Text('฿ -',
+                                Text('฿ ${totalExpense.toStringAsFixed(2)}',
                                     style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
@@ -178,7 +183,7 @@ class _App1dState extends State<App1> {
                                 Text('ค่าใช้จ่ายเหลือเดือนนี้',
                                     style: TextStyle(
                                         fontSize: 18, color: Colors.black87)),
-                                Text('฿ -',
+                                Text('฿ ${remainingExpense.toStringAsFixed(2)}',
                                     style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
@@ -189,19 +194,53 @@ class _App1dState extends State<App1> {
                         ),
                         SizedBox(height: 16),
                         Divider(),
+
+                        // กล่องสำหรับจัดการค่าใช้จ่าย
                         Container(
-                          padding: EdgeInsets.all(8),
+                          padding: EdgeInsets.all(16),
+                          margin: EdgeInsets.only(bottom: 16),
                           decoration: BoxDecoration(
                             color: Colors.grey.shade200,
                             borderRadius: BorderRadius.circular(8),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 6,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('ว่างเปล่า',
+                              Text('จัดการค่าใช้จ่าย',
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.black54)),
-                              Text('0.00 ฿  0.00 %',
+                            ],
+                          ),
+                        ),
+
+                        // ข้อมูลอาหารและเครื่องดื่ม
+                        Container(
+                          padding: EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade200,
+                            borderRadius: BorderRadius.circular(8),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 6,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('อาหาร & เครื่องดื่ม',
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.black54)),
+                              Text('1,500 ฿  60%',
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.black54)),
                             ],

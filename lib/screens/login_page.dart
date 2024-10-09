@@ -1,9 +1,8 @@
 import 'dart:convert';
-import 'package:app_billbuddy/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-// นำเข้าหน้าหลักที่คุณต้องการเชื่อมต่อ เช่น Home
-import 'package:app_billbuddy/page/home.dart';
+import 'package:app_billbuddy/screens/home.dart';
+import 'package:app_billbuddy/screens/register_page.dart'; // เพิ่มการ import หน้า RegisterPage
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -20,20 +19,32 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
 
   Future<void> _login() async {
-    final url = Uri.parse('https://www.melivecode.com/api/login');
+    final url = Uri.parse(
+        'http://127.0.0.1/flutter_api/register.php'); // เปลี่ยน URL ไปยัง API ที่เหมาะสม
     final headers = {'Content-Type': 'application/json'};
     final body = jsonEncode({
       'username': _usernameController.text,
       'password': _passwordController.text
     });
 
-    final response = await http.post(url, headers: headers, body: body);
-    if (response.statusCode == 200) {
-      final jsonResponse = jsonDecode(response.body);
-      _showSnackBar(jsonResponse['message']);
-    } else {
-      final jsonResponse = jsonDecode(response.body);
-      _showSnackBar(jsonResponse['message']);
+    try {
+      final response = await http.post(url, headers: headers, body: body);
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body);
+        _showSnackBar(jsonResponse['message']);
+
+        // หลังจากเข้าสู่ระบบสำเร็จ นำไปยังหน้าหลัก
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Home()),
+        );
+      } else {
+        final jsonResponse = jsonDecode(response.body);
+        _showSnackBar(jsonResponse['message']);
+      }
+    } catch (error) {
+      print('Error: $error');
+      _showSnackBar('เกิดข้อผิดพลาดในการเชื่อมต่อ');
     }
   }
 
@@ -46,10 +57,18 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _goToMainPage() {
-    // สร้างการนำทางไปหน้าหลัก (ในที่นี้คือ Home)
+    // นำทางไปหน้าหลัก (Home)
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => Home()), // เปลี่ยนเป็นหน้า Home
+      MaterialPageRoute(builder: (context) => Home()),
+    );
+  }
+
+  void _goToRegisterPage() {
+    // นำทางไปหน้าสมัครสมาชิก (RegisterPage)
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const RegisterPage()),
     );
   }
 
@@ -67,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   // Image Header
                   Image.asset(
-                    'assets/images/B.png', // Replace with your local image
+                    'assets/images/B.png', // แทนที่ด้วยรูปภาพที่คุณมีในโปรเจค
                     width: 150,
                     height: 150,
                   ),
@@ -174,9 +193,8 @@ class _LoginPageState extends State<LoginPage> {
 
                   // Register Button
                   TextButton(
-                    onPressed: () {
-                      // Navigate to the registration page
-                    },
+                    onPressed:
+                        _goToRegisterPage, // เพิ่มการนำทางไปยังหน้า RegisterPage
                     child: const Text(
                       'สมัครสมาชิก',
                       style: TextStyle(
@@ -212,4 +230,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
- 
+
+void main() {
+  runApp(const MaterialApp(home: LoginPage()));
+}

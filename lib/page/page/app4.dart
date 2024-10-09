@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:app_billbuddy/Setup_page/Setup1.dart';
 import 'package:app_billbuddy/Setup_page/Setup2.dart';
 import 'package:app_billbuddy/Setup_page/Setup3.dart';
 import 'package:app_billbuddy/Setup_page/Setup4.dart';
 import 'package:app_billbuddy/Setup_page/Setup5.dart';
 import 'package:app_billbuddy/Setup_page/Setup6.dart';
-import 'package:flutter/material.dart';
+import 'package:app_billbuddy/screens/login_page.dart';
 
 class App4 extends StatefulWidget {
   @override
@@ -56,7 +57,6 @@ class _App4State extends State<App4> {
                       icon: Icons.person,
                       text: 'บัญชีและโปรไฟล์',
                       onTap: () {
-                        // ฟังก์ชันเมื่อกดที่รายการนี้
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => Setup1()),
@@ -119,7 +119,9 @@ class _App4State extends State<App4> {
                       text: 'ออกจากระบบ',
                       iconColor: Colors.red,
                       textColor: Colors.red,
-                      onTap: () {},
+                      onTap: () {
+                        _logout(context); // เรียกใช้ฟังก์ชันล็อคเอาท์
+                      },
                     ),
                   ],
                 ),
@@ -128,6 +130,16 @@ class _App4State extends State<App4> {
           ),
         ],
       ),
+    );
+  }
+
+  // ฟังก์ชัน Logout ที่พาไปยังหน้าล็อคอิน
+  void _logout(BuildContext context) {
+    // นำทางกลับไปหน้าล็อคอินและลบหน้าก่อนหน้าทั้งหมด
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => LoginPage()), // หน้าล็อคอิน
+      (Route<dynamic> route) => false, // ลบหน้าก่อนหน้าทั้งหมด
     );
   }
 

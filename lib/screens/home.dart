@@ -2,9 +2,9 @@ import 'package:app_billbuddy/page/page/app1.dart';
 import 'package:app_billbuddy/page/page/app4.dart';
 import 'package:app_billbuddy/page/page/app3.dart';
 import 'package:app_billbuddy/page/page/app2.dart';
+import 'package:app_billbuddy/screens/new_page.dart'; // นำเข้าไฟล์ใหม่
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-
 
 class Home extends StatefulWidget {
   @override
@@ -27,7 +27,13 @@ class _HomeState extends State<Home> {
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
-          onPressed: () {},
+          onPressed: () {
+            // เปลี่ยนเส้นทางไปยัง NewPage เมื่อกดปุ่ม
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => NewPage()),
+            );
+          },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
