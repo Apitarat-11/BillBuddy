@@ -101,17 +101,17 @@ class _App1dState extends State<App1> {
                   child: Container(
                     padding: EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.8),
+                      color: Colors.white.withOpacity(0.6),
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(16),
-                        topRight: Radius.circular(16),
+                        topLeft: Radius.circular(14),
+                        topRight: Radius.circular(14),
                       ),
                       boxShadow: [
                         BoxShadow(
                           color:
                               Color.fromARGB(255, 11, 11, 11).withOpacity(0.2),
-                          spreadRadius: 3,
-                          blurRadius: 5,
+                          spreadRadius: 2,
+                          blurRadius: 3,
                           offset: Offset(0, -3),
                         ),
                       ],
@@ -159,8 +159,8 @@ class _App1dState extends State<App1> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CircularPercentIndicator(
-                              radius: 60.0,
-                              lineWidth: 20.0,
+                              radius: 50.0,
+                              lineWidth: 15.0,
                               percent: spentPercent,
                               center: Text(
                                   "${(spentPercent * 100).toStringAsFixed(0)}%"),
@@ -171,18 +171,18 @@ class _App1dState extends State<App1> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('กำหนดค่าใช้จ่ายของเดือนนี้',
+                                Text('ค่าใช้จ่ายที่กำหนดเดือนนี้',
                                     style: TextStyle(
-                                        fontSize: 18, color: Colors.black87)),
+                                        fontSize: 16, color: Colors.black87)),
                                 Text('฿ ${totalExpense.toStringAsFixed(2)}',
                                     style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 17,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.black87)),
-                                SizedBox(height: 18),
-                                Text('ค่าใช้จ่ายเหลือเดือนนี้',
+                                SizedBox(height: 16),
+                                Text('ค่าใช้จ่ายคงเหลือในเดือนนี้',
                                     style: TextStyle(
-                                        fontSize: 18, color: Colors.black87)),
+                                        fontSize: 17, color: Colors.black87)),
                                 Text('฿ ${remainingExpense.toStringAsFixed(2)}',
                                     style: TextStyle(
                                         fontSize: 16,
@@ -195,7 +195,7 @@ class _App1dState extends State<App1> {
                         SizedBox(height: 16),
                         Divider(),
 
-                        // กล่องสำหรับจัดการค่าใช้จ่าย
+                        // จัดการค่าใช้จ่าย
                         Container(
                           padding: EdgeInsets.all(16),
                           margin: EdgeInsets.only(bottom: 16),

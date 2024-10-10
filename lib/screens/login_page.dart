@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:app_billbuddy/screens/home.dart';
-import 'package:app_billbuddy/screens/register_page.dart'; // เพิ่มการ import หน้า RegisterPage
+import 'package:app_billbuddy/screens/register_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -19,12 +19,11 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
 
   Future<void> _login() async {
-    final url = Uri.parse(
-        'http://127.0.0.1/flutter_api/register.php'); // เปลี่ยน URL ไปยัง API ที่เหมาะสม
+    final url = Uri.parse('http://127.0.0.1/flutter_api/login.php');
     final headers = {'Content-Type': 'application/json'};
     final body = jsonEncode({
       'username': _usernameController.text,
-      'password': _passwordController.text
+      'password': _passwordController.text,
     });
 
     try {
@@ -40,7 +39,8 @@ class _LoginPageState extends State<LoginPage> {
         );
       } else {
         final jsonResponse = jsonDecode(response.body);
-        _showSnackBar(jsonResponse['message']);
+        _showSnackBar(
+            jsonResponse['message'] ?? 'เกิดข้อผิดพลาดในการเข้าสู่ระบบ');
       }
     } catch (error) {
       print('Error: $error');
@@ -57,7 +57,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _goToMainPage() {
-    // นำทางไปหน้าหลัก (Home)
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => Home()),
@@ -65,7 +64,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _goToRegisterPage() {
-    // นำทางไปหน้าสมัครสมาชิก (RegisterPage)
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const RegisterPage()),
@@ -86,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   // Image Header
                   Image.asset(
-                    'assets/images/B.png', // แทนที่ด้วยรูปภาพที่คุณมีในโปรเจค
+                    'assets/images/B.png',
                     width: 150,
                     height: 150,
                   ),
@@ -193,8 +191,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   // Register Button
                   TextButton(
-                    onPressed:
-                        _goToRegisterPage, // เพิ่มการนำทางไปยังหน้า RegisterPage
+                    onPressed: _goToRegisterPage,
                     child: const Text(
                       'สมัครสมาชิก',
                       style: TextStyle(

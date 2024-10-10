@@ -2,7 +2,7 @@ import 'package:app_billbuddy/page/page/app1.dart';
 import 'package:app_billbuddy/page/page/app4.dart';
 import 'package:app_billbuddy/page/page/app3.dart';
 import 'package:app_billbuddy/page/page/app2.dart';
-import 'package:app_billbuddy/screens/new_page.dart'; // นำเข้าไฟล์ใหม่
+import 'package:app_billbuddy/screens/new.page.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 

@@ -26,8 +26,8 @@ class _RegisterPageState extends State<RegisterPage> {
       _isLoading = true; // เริ่มโหลด
     });
 
-    final url =
-        Uri.parse('http://127.0.0.1/flutter_api/register.php'); // URL ของ API
+    final url = Uri.parse(
+        'http://192.168.1.xxx/flutter_api/register.php'); // เปลี่ยนเป็น IP Address ของคุณ
     final headers = {'Content-Type': 'application/json'};
     final body = jsonEncode({
       'username': _usernameController.text,
@@ -37,6 +37,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
     try {
       final response = await http.post(url, headers: headers, body: body);
+      print('Response status: ${response.statusCode}'); // แสดงสถานะการตอบกลับ
 
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
@@ -46,13 +47,15 @@ class _RegisterPageState extends State<RegisterPage> {
         // นำผู้ใช้ไปยังหน้าล็อคอิน
         Navigator.pop(context);
       } else {
+        print(
+            'Failed with status code: ${response.statusCode}'); // แสดงรหัสสถานะที่ล้มเหลว
         final jsonResponse = jsonDecode(response.body);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(jsonResponse['message'])),
         );
       }
     } catch (error) {
-      print('Error: $error');
+      print('Error: $error'); // แสดงข้อผิดพลาด
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('เกิดข้อผิดพลาดในการเชื่อมต่อ')),
       );
